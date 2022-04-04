@@ -101,7 +101,6 @@
 </head>
 <body>
     {% extends "base.html" %}
-    {% load static %}
     {% block content %}
     <h1>About</h1>
     <div id="about">
@@ -123,7 +122,7 @@
         <p class="title">Developed by</p>
         <div class="about-container">
             <div class="member-container">
-                <img src="{% static 'myIcon.png/' %}">
+                <img src="../static/myIcon.png">
                 <div class="member-description">
                     <h2>Mike Hwang</h2>
                     <p>
@@ -135,13 +134,13 @@
         <p class="title">Contact</p>
         <div class="contact">
             <a href="mailto:mhwang17@my.bcit.ca" target="_blank">
-                <img src="{% static 'email.png/' %}">
+                <img src="../static/email.png">
             </a>
             <a href="https://www.linkedin.com/in/mhwang17/" target="_blank">
-                <img src="{% static 'linkedin.png/' %}">
+                <img src="../static/linkedin.png">
             </a>
             <a href="https://github.com/sis00337" target="_blank">
-                <img src="{% static 'github.png/' %}">
+                <img src="../static/github.png">
             </a>
         </div>
     </div>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .go-home {
+            text-align: center;
+            margin: auto 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="go-home">
+        <a href="{% url 'home' %}">Home</a> |
+        <a href="{% url 'about' %}">About</a>
+    </div>
+
+    {% block content %} {% endblock content %}
+</body>
+</html>

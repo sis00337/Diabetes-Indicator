@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Result</title>
+    <style>
+        /* Styling the Body element i.e. Color,
+        Font, Alignment */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+            'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+            sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .inputPara {
+            background-color: #009879;
+            color: whitesmoke;
+            font-weight: bold;
+            font-size: 25px;
+            text-align: center;
+            padding: 10px 0;
+            width: 80%;
+            margin: 0 auto 20px;
+        }
+
+        .outputPara {
+            background-color: #009879;
+            color: whitesmoke;
+            font-weight: bold;
+            font-size: 25px;
+            text-align: center;
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px 0;
+        }
+
+        h1 {
+            background-color: slateblue;
+            padding: 20px 0;
+            color: whitesmoke;
+        }
+
+        .styled-table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .output .predict {
+            width: 450px;
+            height: 250px;
+            margin: 0 auto;
+            text-align: center;
+            display:flex;
+            align-items:center;
+        }
+
+        .output .predict p {
+            margin: 0 auto;
+            font-size: 35px;
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h1>Your Result</h1>
+    <div class="container">
+        <div class="input">
+            <p class="inputPara">Your Input</p>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Gender</td>
+                    <td>{{sexChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Age</td>
+                    <td>{{age}}</td>
+                </tr>
+                <tr>
+                    <td>BMI</td>
+                    <td>{{bmi}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Education level</td>
+                    <td>{{eduChoice}}</td>
+                </tr>
+                <tr>
+                    <td>Income level</td>
+                    <td>{{incomeChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>General health</td>
+                    <td>{{genHealthChoice}}</td>
+                </tr>
+                <tr>
+                    <td>Have any health care</td>
+                    <td>{{healthCareChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Could not meet a doctor because of cost</td>
+                    <td>{{noDocChoice}}</td>
+                </tr>
+                <tr>
+                    <td>Number of drinking alcohol per week</td>
+                    <td>{{alcohol}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Have smoked at least 100 cigarettes for your whole life</td>
+                    <td>{{cigarChoice}}</td>
+                </tr>
+                <tr>
+                    <td>Physical activity in the past 30 days</td>
+                    <td>{{physicalChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Fruit consumption in a day</td>
+                    <td>{{fruitChoice}}</td>
+                </tr>
+                <tr>
+                    <td>Vegetable consumption in a day</td>
+                    <td>{{veggiesChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Difficult to climb stairs</td>
+                    <td>{{diffWalkChoice}}</td>
+                </tr>
+                <tr>
+                    <td>High blood pressure</td>
+                    <td>{{BPChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>High cholesterol</td>
+                    <td>{{cholChoice}}</td>
+                </tr>
+                <tr>
+                    <td>Have checked your blood cholesterol in 5 years</td>
+                    <td>{{cholCheckChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Stroke</td>
+                    <td>{{strokeChoice}}</td>
+                </tr>
+                <tr>
+                    <td>Heart Disease</td>
+                    <td>{{heartDiseaseChoice}}</td>
+                </tr>
+                <tr class="active-row">
+                    <td>Problems with mental health in a month</td>
+                    <td>{{mental}}</td>
+                </tr>
+                <tr>
+                    <td>Problems with physical health in a month</td>
+                    <td>{{physicalHealth}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="output">
+        <p class="outputPara">Prediction Result (<b id="prediction">{{prediction}}</b>)</p>
+        <div class="predict">
+            <p></p>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        prediction = document.querySelector(".output b");
+        predictionContainer = document.querySelector(".output .predict");
+        predictionDescribe = document.querySelector(".output .predict p");
+        if (prediction.innerHTML === "0.0") {
+            predictionContainer.style = "background-color: #55A560;";
+            predictionDescribe.innerHTML = "It seems you<br><b>do not have diabetes</b> :)"
+            predictionDescribe.style = "color: whitesmoke;";
+        }
+        else {
+            predictionContainer.style = "background-color: #D95F49;";
+            predictionDescribe.innerHTML = "It seems you have<br><b>diabetes</b> :("
+            predictionDescribe.style = "color: whitesmoke;";
+        }
+    </script>
+    {% endblock content %}
+
+</body>
+</html>

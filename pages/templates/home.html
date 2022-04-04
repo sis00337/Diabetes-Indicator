@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diabetes Indicator</title>
+    <style>
+        /* Styling the Body element i.e. Color,
+        Font, Alignment */
+        body {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+            'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+            sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        p {
+            color: darkred;
+            font-size: 25px;
+        }
+
+        h1 {
+            background-color: slateblue;
+            padding: 20px 0;
+            color: whitesmoke;
+        }
+
+        /* Styling the Form (Color, Padding, Shadow) */
+        form {
+            background-color: #fff;
+            max-width: 90%;
+            margin: 50px;
+            padding: 30px 20px;
+            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-label {
+            font-size: 18px;
+        }
+
+        /* Styling form-control Class */
+        .form-control {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        /* Styling form-control Label */
+        .form-control label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Styling form-control input,
+        select, textarea */
+        .form-control input,
+        .form-control select,
+        .form-control textarea {
+            border: 1px solid #777;
+            border-radius: 2px;
+            font-family: inherit;
+            padding: 10px;
+            display: block;
+            width: 95%;
+        }
+
+        /* Styling form-control Radio
+        button and Checkbox */
+        .form-control input[type="radio"],
+        .form-control input[type="checkbox"] {
+            display: inline-block;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: slateblue;
+            color: whitesmoke;
+            border: 0;
+            padding: 5px 0;
+            border-radius: 2px;
+            font-family: inherit;
+            font-size: 21px;
+            display: block;
+            width: 100%;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- templates/home.html -->
+    {% extends "base.html" %}
+
+    {% block content %}
+    <h1>Diabetes Indicator</h1>
+        <!-- Create Form -->
+    <form id="form" action="{% url 'homePost' %}" method="post">
+    {% csrf_token %}
+        <!-- Details -->
+        <div class="form-control">
+            <label class="form-label">
+                1. What is your gender?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for sexChoice in mySex %}
+                <label for="sexChoice{{ forloop.counter }}">
+                    <input type="radio" name="sexChoice" id="sexChoice{{ forloop.counter }}" value="{{ sexChoice }}" required="required" />{{ sexChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label" for="age">
+                2. How old are you?
+            </label>
+
+            <!-- Input Type Text -->
+            <input type="number"
+                   id="age"
+                   min="18"
+                   name="age"
+                   placeholder="Enter your age (18 +)" required="required" />
+        </div>
+
+        <div class="form-control">
+            <label class="form-label" for="bmi">
+                3. What is your BMI score?
+            </label>
+
+            <!-- Input Type Text -->
+            <input type="number"
+                   id="bmi"
+                   step="0.1"
+                   min="0"
+                   name="bmi"
+                   placeholder="Enter your BMI score" style="margin-bottom: 10px" required="required" />
+            <a href="https://www.diabetes.ca/managing-my-diabetes/tools---resources/body-mass-index-(bmi)-calculator" target="_blank">Go Check Your BMI Score</a>
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                4. Which one best describes your education level?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for eduChoice in myEducation %}
+                <label for="eduChoice{{ forloop.counter }}">
+                    <input type="radio" name="eduChoice" id="eduChoice{{ forloop.counter }}" required="required" value="{{ eduChoice }}"/>{{ eduChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                5. Which one best describes your income level?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for incomeChoice in myIncome %}
+                <label for="incomeChoice{{ forloop.counter }}">
+                    <input type="radio" name="incomeChoice" id="incomeChoice{{ forloop.counter }}" required="required" value="{{ incomeChoice }}" />{{ incomeChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                6. What would you say about your health in general?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for genHealthChoice in myGeneralHealth %}
+                <label for="genHealthChoice{{ forloop.counter }}">
+                    <input type="radio" name="genHealthChoice" id="genHealthChoice{{ forloop.counter }}" required="required" value="{{ genHealthChoice }}" />{{ genHealthChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                7. Do you have any kind of health care coverage, including health insurance, prepaid plans such as HMO, etc.?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for healthCareChoice in myHealthCare %}
+                <label for="healthCareChoice{{ forloop.counter }}">
+                    <input type="radio" name="healthCareChoice" id="healthCareChoice{{ forloop.counter }}" required="required" value="{{ healthCareChoice }}" />{{ healthCareChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                8. Was there a time in the past 12 months when you needed to see a doctor but could not because of cost?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for noDocChoice in myNoDocCost %}
+                <label for="noDocChoice{{ forloop.counter }}">
+                    <input type="radio" name="noDocChoice" id="noDocChoice{{ forloop.counter }}" required="required" value="{{ noDocChoice }}"/>{{ noDocChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label" for="alcohol">
+                9. How many times do you drink alcohol per week?
+            </label>
+
+            <!-- Input Type Text -->
+            <input type="number"
+                   id="alcohol"
+                   min="0"
+                   name="alcohol"
+                   placeholder="Enter the number of times you drink alcohol per week" required="required" />
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                10. Have you smoked at least 100 cigarettes (5 packs) in your entire life?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for cigarChoice in myCigar %}
+                <label for="cigarChoice{{ forloop.counter }}">
+                    <input type="radio" name="cigarChoice" id="cigarChoice{{ forloop.counter }}" required="required" value="{{ cigarChoice }}"/>{{ cigarChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                11. Have you ever done physical activity in the past 30 days? (Not including job)
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for physicalChoice in myPhysicalActivity %}
+                <label for="physicalChoice{{ forloop.counter }}">
+                    <input type="radio" name="physicalChoice" id="physicalChoice{{ forloop.counter }}" required="required" value="{{ physicalChoice }}" />{{ physicalChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                12. Do you consume fruit 1 or more times per day?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for fruitChoice in myFruit %}
+                <label for="fruitChoice{{ forloop.counter }}">
+                    <input type="radio" name="fruitChoice" id="fruitChoice{{ forloop.counter }}" required="required" value="{{ fruitChoice }}" />{{ fruitChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                13. Do you consume vegetables 1 or more times per day?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for veggiesChoice in myVeggies %}
+                <label for="veggiesChoice{{ forloop.counter }}">
+                    <input type="radio" name="veggiesChoice" id="veggiesChoice{{ forloop.counter }}" required="required" value="{{ veggiesChoice }}" />{{ veggiesChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                14. Do you have serious difficulty walking or climbing stairs?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for diffWalkChoice in myDiffWalk %}
+                <label for="diffWalkChoice{{ forloop.counter }}">
+                    <input type="radio" name="diffWalkChoice" id="diffWalkChoice{{ forloop.counter }}" required="required" value="{{ diffWalkChoice }}" />{{ diffWalkChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                15. Have you ever been told by a doctor, nurse, or other health professional that you have <b>high blood pressure</b>?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for BPChoice in myBP %}
+                <label for="BPChoice{{ forloop.counter }}">
+                    <input type="radio" name="BPChoice" id="BPChoice{{ forloop.counter }}" required="required" value="{{ BPChoice }}" />{{ BPChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                16. Have you ever been told by a doctor, nurse, or other health professional that your <b>blood cholesterol</b> is high?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for cholChoice in myChol %}
+                <label for="cholChoice{{ forloop.counter }}">
+                    <input type="radio" name="cholChoice" id="cholChoice{{ forloop.counter }}" required="required" value="{{ cholChoice }}" />{{ cholChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                17. Have you ever checked your blood cholesterol within 5 years?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for cholCheckChoice in myCholCheck %}
+                <label for="cholCheckChoice{{ forloop.counter }}">
+                    <input type="radio" name="cholCheckChoice" id="cholCheckChoice{{ forloop.counter }}" required="required" value="{{ cholCheckChoice }}" />{{ cholCheckChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                18. Have you ever been told by a doctor, nurse, or other health professional that you have <b>stroke</b>?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for strokeChoice in myStroke %}
+                <label for="strokeChoice{{ forloop.counter }}">
+                    <input type="radio" name="strokeChoice" id="strokeChoice{{ forloop.counter }}" required="required" value="{{ strokeChoice }}" />{{ strokeChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label">
+                19. Have you ever been told by a doctor, nurse, or other health professional that you have <b>coronary heart disease (CHD)</b> or <b>myocardial infarction (MI)</b>?
+            </label>
+
+            <!-- Input Type Radio Button -->
+            {% for heartDiseaseChoice in myHeartDisease %}
+                <label for="heartDiseaseChoice{{ forloop.counter }}">
+                    <input type="radio" name="heartDiseaseChoice" id="heartDiseaseChoice{{ forloop.counter }}" required="required" value="{{ heartDiseaseChoice }}"/>{{ heartDiseaseChoice }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="form-control">
+            <label class="form-label" for="mental">
+                20. Thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your <b>mental health</b> not good?
+            </label>
+
+            <!-- Input Type Text -->
+            <input type="number"
+                   id="mental"
+                   min="0"
+                   max="30"
+                   name="mental"
+                   placeholder="Enter the number of days (0 - 30)" required="required"/>
+        </div>
+
+        <div class="form-control">
+            <label class="form-label" for="physicalHealth">
+                21. Thinking about your physical health, which includes physical illness and injury, for how many days during the past 30 days was your <b>physical health</b> not good?
+            </label>
+
+            <!-- Input Type Text -->
+            <input type="number"
+                   id="physicalHealth"
+                   min="0"
+                   max="30"
+                   name="physicalHealth"
+                   placeholder="Enter the number of days (0 - 30)" required="required" />
+        </div>
+
+        <input type="submit" value="Submit">
+
+    </form>
+    <!-- This error will notify the user if there are issues with the POST request -->
+    {% if errorMessage %}<p><strong>{{errorMessage}}</strong></p>{% endif %}
+    {% endblock content %}
+</body>
+</html>
